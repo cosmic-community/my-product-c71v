@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import Hero from '@/components/Hero'
 import SectionHeading from '@/components/SectionHeading'
@@ -12,6 +13,17 @@ import {
   getFAQs,
 } from '@/lib/cosmic'
 
+export const metadata: Metadata = {
+  title: 'My Product — Ship Faster, Grow Smarter',
+  description:
+    'My Product is the all-in-one SaaS platform to help your business grow. Explore features, pricing, testimonials, and documentation.',
+  openGraph: {
+    title: 'My Product — Ship Faster, Grow Smarter',
+    description:
+      'My Product is the all-in-one SaaS platform to help your business grow. Explore features, pricing, testimonials, and documentation.',
+  },
+}
+
 export default async function HomePage() {
   const [features, pricingTiers, testimonials, faqs] = await Promise.all([
     getFeatures(),
@@ -20,8 +32,29 @@ export default async function HomePage() {
     getFAQs(),
   ])
 
+  // JSON-LD structured data for the home page
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'My Product',
+    applicationCategory: 'BusinessApplication',
+    description:
+      'My Product is the all-in-one SaaS platform to help your business grow.',
+    url: process.env.NEXT_PUBLIC_SITE_URL || 'https://my-product.vercel.app',
+    offers: {
+      '@type': 'AggregateOffer',
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock',
+    },
+  }
+
   return (
     <div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       <Hero />
 
       {/* Features */}

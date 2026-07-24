@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import SectionHeading from '@/components/SectionHeading'
 import PricingCard from '@/components/PricingCard'
 import FAQAccordion from '@/components/FAQAccordion'
+import { PricingViewTracker } from '@/components/EventTracker'
 import { getPricingTiers, getFAQs } from '@/lib/cosmic'
 
 export const metadata: Metadata = {
@@ -22,6 +23,9 @@ export default async function PricingPage() {
 
   return (
     <div className="py-24">
+      {/* Fire pricing_view event on mount */}
+      <PricingViewTracker />
+
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           eyebrow="Pricing"

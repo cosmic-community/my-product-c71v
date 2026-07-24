@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import Hero from '@/components/Hero'
 import SectionHeading from '@/components/SectionHeading'
@@ -12,6 +13,17 @@ import {
   getFAQs,
 } from '@/lib/cosmic'
 
+export const metadata: Metadata = {
+  title: 'My Product — Ship Faster, Grow Smarter',
+  description:
+    'My Product is the all-in-one SaaS platform to help your business grow. Explore features, pricing, testimonials, and documentation.',
+  openGraph: {
+    title: 'My Product — Ship Faster, Grow Smarter',
+    description:
+      'My Product is the all-in-one SaaS platform to help your business grow. Explore features, pricing, testimonials, and documentation.',
+  },
+}
+
 export default async function HomePage() {
   const [features, pricingTiers, testimonials, faqs] = await Promise.all([
     getFeatures(),
@@ -20,11 +32,30 @@ export default async function HomePage() {
     getFAQs(),
   ])
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'My Product',
+    applicationCategory: 'BusinessApplication',
+    description:
+      'My Product is the all-in-one SaaS platform to help your business grow.',
+    url: process.env.NEXT_PUBLIC_SITE_URL || 'https://my-product.vercel.app',
+    offers: {
+      '@type': 'AggregateOffer',
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock',
+    },
+  }
+
   return (
     <div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       <Hero />
 
-      {/* Features */}
       {features.length > 0 && (
         <section className="py-24 bg-white">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -55,7 +86,6 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* Pricing */}
       {pricingTiers.length > 0 && (
         <section className="py-24 bg-gray-50">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -73,7 +103,6 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* Testimonials */}
       {testimonials.length > 0 && (
         <section className="py-24 bg-white">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -91,7 +120,6 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* FAQ */}
       {faqs.length > 0 && (
         <section id="faq" className="py-24 bg-gray-50 scroll-mt-16">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -107,7 +135,6 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* CTA */}
       <section className="py-24 bg-gradient-to-r from-brand-600 to-brand-500">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-extrabold text-white sm:text-4xl">

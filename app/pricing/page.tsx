@@ -1,11 +1,18 @@
+import type { Metadata } from 'next'
 import SectionHeading from '@/components/SectionHeading'
 import PricingCard from '@/components/PricingCard'
 import FAQAccordion from '@/components/FAQAccordion'
+import { PricingViewTracker } from '@/components/EventTracker'
 import { getPricingTiers, getFAQs } from '@/lib/cosmic'
 
-export const metadata = {
-  title: 'Pricing — My Product',
-  description: 'Simple, transparent pricing for teams of all sizes.',
+export const metadata: Metadata = {
+  title: 'Pricing',
+  description:
+    'Simple, transparent pricing for teams of all sizes. No hidden fees. Choose the plan that fits your business — upgrade or cancel anytime.',
+  openGraph: {
+    title: 'Pricing — My Product',
+    description: 'Simple, transparent pricing for teams of all sizes. No hidden fees.',
+  },
 }
 
 export default async function PricingPage() {
@@ -16,6 +23,7 @@ export default async function PricingPage() {
 
   return (
     <div className="py-24">
+      <PricingViewTracker />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           eyebrow="Pricing"
@@ -37,10 +45,7 @@ export default async function PricingPage() {
 
         {faqs.length > 0 && (
           <div className="mt-32">
-            <SectionHeading
-              eyebrow="FAQ"
-              title="Frequently asked questions"
-            />
+            <SectionHeading eyebrow="FAQ" title="Frequently asked questions" />
             <div className="mt-16">
               <FAQAccordion faqs={faqs} />
             </div>

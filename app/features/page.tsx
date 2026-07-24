@@ -1,10 +1,16 @@
+import type { Metadata } from 'next'
 import SectionHeading from '@/components/SectionHeading'
 import FeatureCard from '@/components/FeatureCard'
 import { getFeatures } from '@/lib/cosmic'
 
-export const metadata = {
-  title: 'Features — My Product',
-  description: 'Explore all the powerful features of My Product.',
+export const metadata: Metadata = {
+  title: 'Features',
+  description:
+    'Explore all the powerful features of My Product — the all-in-one SaaS platform built to help modern teams ship faster and grow smarter.',
+  openGraph: {
+    title: 'Features — My Product',
+    description: 'Explore all the powerful features of My Product.',
+  },
 }
 
 export default async function FeaturesPage() {

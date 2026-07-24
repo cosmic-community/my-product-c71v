@@ -1,11 +1,17 @@
+import type { Metadata } from 'next'
 import SectionHeading from '@/components/SectionHeading'
 import PricingCard from '@/components/PricingCard'
 import FAQAccordion from '@/components/FAQAccordion'
 import { getPricingTiers, getFAQs } from '@/lib/cosmic'
 
-export const metadata = {
-  title: 'Pricing — My Product',
-  description: 'Simple, transparent pricing for teams of all sizes.',
+export const metadata: Metadata = {
+  title: 'Pricing',
+  description:
+    'Simple, transparent pricing for teams of all sizes. No hidden fees. Choose the plan that fits your business — upgrade or cancel anytime.',
+  openGraph: {
+    title: 'Pricing — My Product',
+    description: 'Simple, transparent pricing for teams of all sizes. No hidden fees.',
+  },
 }
 
 export default async function PricingPage() {

@@ -4,10 +4,59 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import CosmicBadge from '@/components/CosmicBadge'
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://my-product.vercel.app'
+
 export const metadata: Metadata = {
-  title: 'My Product — Ship Faster, Grow Smarter',
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: 'My Product — Ship Faster, Grow Smarter',
+    template: '%s | My Product',
+  },
   description:
     'My Product is the all-in-one SaaS platform to help your business grow. Explore features, pricing, testimonials, and documentation.',
+  keywords: ['SaaS platform', 'ship faster', 'grow smarter', 'business software', 'team productivity'],
+  authors: [{ name: 'My Product Team' }],
+  creator: 'My Product',
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: siteUrl,
+    siteName: 'My Product',
+    title: 'My Product — Ship Faster, Grow Smarter',
+    description:
+      'My Product is the all-in-one SaaS platform to help your business grow. Explore features, pricing, testimonials, and documentation.',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'My Product — Ship Faster, Grow Smarter',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'My Product — Ship Faster, Grow Smarter',
+    description:
+      'My Product is the all-in-one SaaS platform to help your business grow.',
+    images: ['/og-image.png'],
+    creator: '@myproduct',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  verification: {
+    // Add your Google Search Console verification token here:
+    // google: 'YOUR_VERIFICATION_TOKEN',
+  },
 }
 
 export default function RootLayout({
@@ -36,7 +85,7 @@ export default function RootLayout({
         />
         {/* Console capture script for dashboard debugging */}
         <script src="/dashboard-console-capture.js" />
-              <script defer src="https://insights.cosmicinsights.dev/script.js" data-project="6a62de6dd8e32f8df93cabad"></script>
+        <script defer src="https://insights.cosmicinsights.dev/script.js" data-project="6a62de6dd8e32f8df93cabad" />
       </head>
       <body className="font-sans flex flex-col min-h-screen">
         <Header />

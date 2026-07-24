@@ -15,6 +15,9 @@ export default function PricingCard({ tier }: { tier: PricingTier }) {
     ? includedFeatures.split('\n').map((f) => f.trim()).filter(Boolean)
     : []
 
+  const isNumericPrice = price !== null && price !== undefined && !isNaN(Number(price))
+  const isFree = Number(price) === 0
+
   return (
     <div
       className={`relative flex flex-col rounded-2xl p-8 ${
@@ -35,8 +38,17 @@ export default function PricingCard({ tier }: { tier: PricingTier }) {
       )}
 
       <div className="mt-6 flex items-baseline gap-1">
-        <span className="text-4xl font-extrabold text-gray-900">{price}</span>
-        {billingPeriod && (
+        {isFree ? (
+          <span className="text-4xl font-extrabold text-gray-900">Free</span>
+        ) : isNumericPrice ? (
+          <>
+            <span className="text-2xl font-bold text-gray-900">$</span>
+            <span className="text-4xl font-extrabold text-gray-900">{price}</span>
+          </>
+        ) : (
+          <span className="text-4xl font-extrabold text-gray-900">{price}</span>
+        )}
+        {billingPeriod && !isFree && (
           <span className="text-sm text-gray-500">/{billingPeriod}</span>
         )}
       </div>

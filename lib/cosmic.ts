@@ -5,6 +5,7 @@ import type {
   FAQ,
   Testimonial,
   DocumentationPage,
+  Page,
 } from '@/types'
 
 export const cosmic = createBucketClient({
@@ -125,5 +126,19 @@ export async function getDocumentationPage(
       return null
     }
     throw new Error('Failed to fetch documentation page')
+  }
+}
+
+export async function getPage(slug: string): Promise<Page | null> {
+  try {
+    const response = await cosmic.objects
+      .findOne({ type: 'pages', slug })
+      .depth(1)
+    return response.object as Page
+  } catch (error) {
+    if (hasStatus(error) && error.status === 404) {
+      return null
+    }
+    throw new Error('Failed to fetch page')
   }
 }

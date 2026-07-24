@@ -73,6 +73,17 @@ export interface DocumentationPage extends CosmicObject {
   };
 }
 
+// Standalone page object (e.g. About)
+export interface Page extends CosmicObject {
+  type: 'pages';
+  metadata: {
+    heading?: string;
+    subheading?: string;
+    hero_image?: CosmicImage;
+    content?: string;
+  };
+}
+
 // API response wrapper
 export interface CosmicResponse<T> {
   objects: T[];
